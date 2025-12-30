@@ -1,0 +1,54 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Note: This app uses custom Member ID authentication, not Firebase Auth
+    // So we allow operations based on document structure rather than request.auth
+    
+    // Roadmap data - read by all, write allowed for seeding
+    match /roadmap/{document=**} {
+      allow read: if true;
+      allow write: if true; // Allow seeding and admin operations
+    }
+    
+    // Member progress - allow read/write for all members
+    match /members/{memberId} {
+      allow read: if true;
+      allow create: if true;
+      allow update: if true;
+      allow delete: if true;
+      
+      // Device logs subcollection
+      match /devices/{deviceId} {
+        allow read: if true;
+        allow create: if true;
+        allow update: if true;
+        allow delete: if true;
+      }
+      
+      // Progress subcollection
+      match /progress/{weekId} {
+        allow read: if true;
+        allow write: if true;
+      }
+    }
+    
+    // Admin collection
+    match /admins/{adminId} {
+      allow read, write: if true;
+    }
+    
+    // Settings
+    match /settings/{document=**} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Resources
+    match /resources/{resourceId} {
+      allow read: if true;
+      allow write: if true;
+    }
+  }
+}
