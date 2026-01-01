@@ -123,6 +123,32 @@ export default function AdminPage() {
         }
     };
 
+    const handleBulkResetMembers = async () => {
+        const confirmText = prompt('This will clear ALL progress and codenames for ALL members. Type "RESET" to confirm:');
+        if (confirmText !== 'RESET') return;
+
+        setLoading(true);
+        try {
+            const membersRef = collection(db, 'members');
+            const membersSnapshot = await getDocs(membersRef);
+
+            for (const memberDoc of membersSnapshot.docs) {
+                await updateDoc(memberDoc.ref, {
+                    completedTasks: [],
+                    codename: ''
+                });
+            }
+
+            alert('Successfully reset progress and codenames for all members.');
+            loadMembers();
+        } catch (err) {
+            console.error('Error in bulk reset:', err);
+            alert('Failed to reset all members.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     if (!isAuthenticated) {
         return (
             <div className="min-h-screen bg-background flex items-center justify-center p-4">
@@ -233,6 +259,14 @@ export default function AdminPage() {
                                 >
                                     {idsVisible ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                                     {idsVisible ? 'Hide IDs' : 'Show IDs'}
+                                </Button>
+                                <Button
+                                    variant="outline"
+                                    onClick={handleBulkResetMembers}
+                                    disabled={loading}
+                                    className="border-destructive/30 hover:border-destructive hover:bg-destructive/10 text-destructive gap-2"
+                                >
+                                    Reset All Member Data
                                 </Button>
                                 <Button
                                     variant="outline"
