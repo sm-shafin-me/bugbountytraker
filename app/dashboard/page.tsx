@@ -25,8 +25,6 @@ export default function Dashboard() {
     const [isEditingName, setIsEditingName] = useState(false);
     const [tempName, setTempName] = useState('');
 
-
-
     useEffect(() => {
         if (!isAuthenticated || !memberId) {
             router.push('/');

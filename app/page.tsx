@@ -94,7 +94,7 @@ export default function LoginPage() {
               <Input
                 id="memberId"
                 type="text"
-                placeholder="BB-XXXX-XX"
+                placeholder="Enter Member ID"
                 value={memberId}
                 onChange={(e) => setMemberId(e.target.value)}
                 className="text-center text-lg tracking-wider font-mono uppercase border-primary/30 focus:border-primary transition-colors"
@@ -102,7 +102,7 @@ export default function LoginPage() {
                 required
               />
               <p className="text-xs text-muted-foreground text-center">
-                Format: BB-XXXX-XX
+                Enter your unique security key
               </p>
             </div>
 
