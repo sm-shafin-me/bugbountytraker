@@ -1,6 +1,6 @@
 export const MEMBER_IDS = [
     'AFROredX6Q9K2',
-    'redX7Q9L2M8K4AZ',
+    'redXRahatT4031',
     'redXF92MQA7LK8Z',
     'redX8KQ7M2ZA9LF',
     'redXA9ZK2QF8M7L',
